@@ -29,8 +29,8 @@ ifneq ($(USE_INTEL_PATH), NONE)
 		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/mkl/lib
 		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/lib
 	else
-		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/mkl/lib/intel64
-		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/lib/intel64
+		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/mkl/lib
+		MSHADOW_LDFLAGS += -L$(USE_INTEL_PATH)/lib
 	endif
 	MSHADOW_CFLAGS += -I$(USE_INTEL_PATH)/mkl/include
 endif
@@ -40,7 +40,7 @@ ifeq ($(USE_INTEL_PATH), NONE)
 else
 	MKLROOT = $(USE_INTEL_PATH)/mkl
 endif
-	MSHADOW_LDFLAGS +=  -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a -Wl,--end-group -liomp5 -ldl -lpthread -lm
+	MSHADOW_LDFLAGS +=  -Wl,--start-group ${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_core.a ${MKLROOT}/lib/libmkl_intel_thread.a -Wl,--end-group -liomp5 -ldl -lpthread -lm
 else
 	MSHADOW_LDFLAGS += -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 endif
