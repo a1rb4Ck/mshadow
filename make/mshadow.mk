@@ -40,7 +40,12 @@ ifeq ($(USE_INTEL_PATH), NONE)
 else
 	MKLROOT = $(USE_INTEL_PATH)/mkl
 endif
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	MSHADOW_LDFLAGS +=  ${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_core.a ${MKLROOT}/lib/libmkl_intel_thread.a -liomp5 -ldl -lpthread -lm
+else
 	MSHADOW_LDFLAGS +=  -Wl,--start-group ${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_core.a ${MKLROOT}/lib/libmkl_intel_thread.a -Wl,--end-group -liomp5 -ldl -lpthread -lm
+endif
 else
 	MSHADOW_LDFLAGS += -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 endif
